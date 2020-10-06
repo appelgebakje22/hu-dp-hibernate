@@ -1,0 +1,12 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.hibernate:hibernate-core:5.4.22.Final"
+    implementation "org.postgresql:postgresql:42.2.16.jre7"
+}
