@@ -8,7 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "product")
@@ -16,20 +18,20 @@ public class Product {
 
 	@Id
 	@Column(name = "product_nummer")
-	public int productNummer;
+	private int productNummer;
 
 	@Column(name = "naam")
-	public String naam;
+	private String naam;
 
 	@Column(name = "beschrijving")
-	public String beschrijving;
+	private String beschrijving;
 
 	@Column(name = "prijs")
-	public float prijs;
+	private float prijs;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "ov_chipkaart_product", joinColumns = @JoinColumn(name = "product_nummer"), inverseJoinColumns = @JoinColumn(name = "kaart_nummer"))
-	public List<OvChipkaart> ovList;
+	private List<OvChipkaart> ovList;
 
 	public Product(int productNummer, String naam, String beschrijving, float prijs) {
 		this.productNummer = productNummer;
@@ -80,5 +82,18 @@ public class Product {
 
 	public void setOvList(List<OvChipkaart> ovList) {
 		this.ovList = ovList;
+	}
+
+	public void addOvChipkaart(OvChipkaart ov) {
+		if (this.ovList == null) {
+			this.ovList = new ArrayList<>();
+		}
+		this.ovList.add(ov);
+	}
+
+	public void removeOvChipkaart(OvChipkaart ov) {
+		if (this.ovList != null) {
+			this.ovList.remove(ov);
+		}
 	}
 }

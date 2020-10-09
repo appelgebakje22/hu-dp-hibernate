@@ -13,23 +13,23 @@ public class Adres {
 
 	@Id
 	@Column(name = "adres_id")
-	public int adresId;
+	private int adresId;
 
 	@Column(name = "postcode")
-	public String postcode;
+	private String postcode;
 
 	@Column(name = "huisnummer")
-	public String huisnummer;
+	private String huisnummer;
 
 	@Column(name = "straat")
-	public String straat;
+	private String straat;
 
 	@Column(name = "woonplaats")
-	public String woonplaats;
+	private String woonplaats;
 
 	@OneToOne
 	@JoinColumn(name = "reiziger_id")
-	public Reiziger reiziger;
+	private Reiziger reiziger;
 
 	public Adres(int adresId, String postcode, String huisnummer, String straat, String woonplaats, Reiziger reiziger) {
 		this.adresId = adresId;

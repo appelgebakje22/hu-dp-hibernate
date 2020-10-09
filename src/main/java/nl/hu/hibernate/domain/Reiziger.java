@@ -12,19 +12,19 @@ public class Reiziger {
 
 	@Id
 	@Column(name = "reiziger_id")
-	public int reizigerId;
+	private int reizigerId;
 
 	@Column(name = "voorletters")
-	public String voorletters;
+	private String voorletters;
 
 	@Column(name = "tussenvoegsel")
-	public String tussenvoegsel;
+	private String tussenvoegsel;
 
 	@Column(name = "achternaam")
-	public String achternaam;
+	private String achternaam;
 
 	@Column(name = "geboortedatum")
-	public LocalDate geboortedatum;
+	private LocalDate geboortedatum;
 
 	public Reiziger(int reizigerId, String voorletters, String tussenvoegsel, String achternaam, LocalDate geboortedatum) {
 		this.reizigerId = reizigerId;

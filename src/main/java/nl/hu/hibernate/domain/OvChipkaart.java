@@ -10,6 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,24 +19,24 @@ public class OvChipkaart {
 
 	@Id
 	@Column(name = "kaart_nummer")
-	public int kaartNummer;
+	private int kaartNummer;
 
 	@Column(name = "geldig_tot")
-	public LocalDate geldigTot;
+	private LocalDate geldigTot;
 
 	@Column(name = "klasse")
-	public byte klasse;
+	private byte klasse;
 
 	@Column(name = "saldo")
-	public float saldo;
+	private float saldo;
 
 	@ManyToOne
 	@JoinColumn(name = "reiziger_id")
-	public Reiziger reiziger;
+	private Reiziger reiziger;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "ov_chipkaart_product", joinColumns = @JoinColumn(name = "kaart_nummer"), inverseJoinColumns = @JoinColumn(name = "product_nummer"))
-	public List<Product> productList;
+	private List<Product> productList;
 
 	public OvChipkaart(int kaartNummer, LocalDate geldigTot, byte klasse, float saldo, Reiziger reiziger) {
 		this.kaartNummer = kaartNummer;
@@ -95,5 +96,18 @@ public class OvChipkaart {
 
 	public void setProductList(List<Product> productList) {
 		this.productList = productList;
+	}
+
+	public void addProduct(Product product) {
+		if (this.productList == null) {
+			this.productList = new ArrayList<>();
+		}
+		this.productList.add(product);
+	}
+
+	public void removeProduct(Product product) {
+		if (this.productList != null) {
+			this.productList.remove(product);
+		}
 	}
 }
